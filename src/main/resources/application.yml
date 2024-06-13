@@ -1,0 +1,51 @@
+server:
+  port: 8081
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/postgres
+    username: postgres
+    password: 123456
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate.ddl-auto: update
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+cloud:
+  aws:
+    stack:
+      auto: false
+    region:
+      static: eu-central-1
+    credentials:
+      access-key: dummy
+      secret-key: dummy
+    endpoint:
+      uri: http://localhost:4566
+
+aws:
+  sqs:
+    queue: http://sqs.eu-central-1.localhost.localstack.cloud:4566/000000000000/queue-notification
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: [ "prometheus" ]
+      base-path: /actuator
+    jmx:
+      exposure:
+        exclude: "*"
+  endpoint:
+    health:
+      show-details: always
+      probes:
+        enabled: true
+  health:
+    livenessState:
+      enabled: true
+    readinessState:
+      enabled: true
